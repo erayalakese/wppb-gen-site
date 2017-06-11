@@ -62,6 +62,7 @@ app.route('/')
 		pluginAuthorURI = String(data.author.uri).length ? data.author.uri : 'http://mydomain.tld';
 		pluginAuthorEmail = String(data.author.email).length ? data.author.email : 'my@email.tld';
 		pluginNamePackage = capitalize( pluginSlug );
+		pluginNamespace = pluginNamePackage.replace(/_/gi, '');
 		pluginNameInstance = pluginSlug.replace(/-/gi, '_');
 		pluginAuthorFull = pluginAuthor +' <'+ pluginAuthorEmail + '>';
 
@@ -238,6 +239,21 @@ app.route('/')
 
 				});
 
+				//find Namespace
+				replace({
+
+					regex: "PluginName",
+
+					replacement: pluginNamespace,
+
+					paths:[destination + '/' + pluginSlug],
+
+					recursive: true,
+
+					silent: true
+
+				});
+
 				//Replace done ZIP it
 
 				var zip = new EasyZip();
@@ -285,7 +301,7 @@ clean.start();
  */
 var getSourceCode = function(){
 
-	var repo = {user: 'DevinVinson', repo: 'WordPress-Plugin-Boilerplate', ref: 'master'};
+	var repo = {user: 'erayalakese', repo: 'WordPress-Plugin-Boilerplate', ref: 'master'};
 
 	var destination = process.cwd() + "/source/";
 
